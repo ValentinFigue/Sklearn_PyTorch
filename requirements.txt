@@ -1,1 +1,3 @@
 sphinx
+torch
+torchvision
