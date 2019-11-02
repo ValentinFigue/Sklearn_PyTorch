@@ -1,18 +1,90 @@
 # -*- coding: utf-8 -*-
-import CSVReader
 import random
 from math import log, sqrt
+import torch
 
+
+class DecisionNode:
+    def __init__(self, col=-1, value=None, results=None, tb=None, fb=None):
+        self.col = col
+        self.value = value
+        self.results = results
+        self.tb = tb
+        self.fb = fb
+
+
+class TorchDecisionTreeClassifier(torch.nn.Module):
+
+    def __init__(self, max_depth=-1):
+        self.root_node = None
+        self.max_depth = max_depth
+
+    def fit(self, vectors, labels, criterion=None):
+        if len(vectors) < 1:
+            raise ValueError("Not enough samples in the given dataset")
+
+        if not criterion:
+            criterion = self.entropy
+
+        self.root_node = self.build_tree(vectors, labels, criterion, self.max_depth)
+
+    def build_tree(self, vectors,labels, func, depth):
+        if len(vectors) == 0:
+            return self.DecisionNode()
+        if depth == 0:
+            return self.DecisionNode(results=self.unique_counts(labels))
+
+        current_score = func(vectors)
+        best_gain = 0.0
+        best_criteria = None
+        best_sets = None
+        column_count = len(rows[0]) - 1
+
+        for col in range(0, column_count):
+            column_values = {}
+            for row in rows:
+                column_values[row[col]] = 1
+            for value in column_values.keys():
+                set1, set2 = self.divide_set(rows, col, value)
+
+                p = float(len(set1)) / len(rows)
+                gain = current_score - p * func(set1) - (1 - p) * func(set2)
+                if gain > best_gain and len(set1) > 0 and len(set2) > 0:
+                    best_gain = gain
+                    best_criteria = (col, value)
+                    best_sets = (set1, set2)
+
+        if best_gain > 0:
+            trueBranch = self.build_tree(best_sets[0], func, depth - 1)
+            falseBranch = self.build_tree(best_sets[1], func, depth - 1)
+            return self.DecisionNode(col=best_criteria[0],
+                                     value=best_criteria[1],
+                                     tb=trueBranch, fb=falseBranch)
+        else:
+            return self.DecisionNode(results=self.unique_counts(rows))
+
+
+
+def entropy(labels):
+    log2 = lambda x: log(x) / log(2)
+    results = unique_counts(labels)
+    ent = 0.0
+    for r in results.keys():
+        p = float(results[r]) / len(labels)
+        ent = ent - p * log2(p)
+    return ent
+
+
+def unique_counts(labels):
+    results = {}
+    for label in labels:
+        r = label
+        if r not in results:
+            results[r] = 0
+        results[r] += 1
+    return results
 
 class DecisionTreeClassifier:
-
-    class DecisionNode:
-        def __init__(self, col=-1, value=None, results=None, tb=None, fb=None):
-            self.col = col
-            self.value = value
-            self.results = results
-            self.tb = tb
-            self.fb = fb
 
     """
     :param  max_depth:          Maximum number of splits during training
@@ -188,15 +260,5 @@ class DecisionTreeClassifier:
             return self.classify(observation, branch)
 
 
-def test_tree():
-    data = CSVReader.read_csv("../data/income.csv")
-    tree = DecisionTreeClassifier(random_features=True)
-    tree.fit(data)
-
-    print(tree.predict([39, 'State-gov', 'Bachelors', 13, 'Never-married',
-                        'Adm-clerical', 'Not-in-family', 'White', 'Male',
-                        2174, 0, 40, 'United-States']))
-
-
 if __name__ == '__main__':
-    test_tree()
+    pass
