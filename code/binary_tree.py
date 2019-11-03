@@ -22,9 +22,10 @@ class TorchDecisionTreeClassifier(torch.nn.Module):
     def fit(self, vectors, labels, criterion=None):
         if len(vectors) < 1:
             raise ValueError("Not enough samples in the given dataset")
-
+        if len(vectors) != len(labels):
+            raise ValueError("Labels and data vectors must have the same number of elements")
         if not criterion:
-            criterion = self.entropy
+            criterion = entropy
 
         self.root_node = self.build_tree(vectors, labels, criterion, self.max_depth)
 
@@ -32,40 +33,39 @@ class TorchDecisionTreeClassifier(torch.nn.Module):
         if len(vectors) == 0:
             return DecisionNode()
         if depth == 0:
-            return DecisionNode(results=self.unique_counts(labels))
+            return DecisionNode(results=unique_counts(labels))
 
         current_score = func(vectors)
         best_gain = 0.0
         best_criteria = None
         best_sets = None
-        column_count = len(vectors[0]) - 1
+        column_count = len(vectors[0])
 
         for col in range(0, column_count):
             column_values = {}
             for vector in vectors:
                 column_values[vector[col]] = 1
             for value in column_values.keys():
-                set1, set2 = self.divide_set(vectors, col, value)
+                vectors_set_1, label_set_1, vectors_set_2, label_set_2 = divide_set(vectors, labels, col, value)
 
-                p = float(len(set1)) / len(vectors)
-                gain = current_score - p * func(set1) - (1 - p) * func(set2)
-                if gain > best_gain and len(set1) > 0 and len(set2) > 0:
+                p = float(len(vectors_set_1)) / len(vectors)
+                gain = current_score - p * func(vectors_set_1) - (1 - p) * func(vectors_set_1)
+                if gain > best_gain and len(vectors_set_1) > 0 and len(vectors_set_2) > 0:
                     best_gain = gain
                     best_criteria = (col, value)
-                    best_sets = (set1, set2)
+                    best_sets = ((vectors_set_1,label_set_1), (vectors_set_2,label_set_2))
 
         if best_gain > 0:
-            trueBranch = self.build_tree(best_sets[0], func, depth - 1)
-            falseBranch = self.build_tree(best_sets[1], func, depth - 1)
+            true_branch = self.build_tree(best_sets[0][0], best_sets[0][1], func, depth - 1)
+            false_branch = self.build_tree(best_sets[1][0], best_sets[1][1], func, depth - 1)
             return DecisionNode(col=best_criteria[0],
-                                     value=best_criteria[1],
-                                     tb=trueBranch, fb=falseBranch)
+                                value=best_criteria[1],
+                                tb=true_branch, fb=false_branch)
         else:
-            return DecisionNode(results=self.unique_counts(labels))
+            return DecisionNode(results=unique_counts(labels))
 
 
 def entropy(labels):
-    log2 = lambda x: log(x) / log(2)
     results = unique_counts(labels)
     ent = 0.0
     for r in results.keys():
@@ -84,14 +84,28 @@ def unique_counts(labels):
     return results
 
 
-def divide_set(rows, column, value):
+def divide_set(vectors, labels, column, value):
 
-    split_function = lambda row: row[column] >= value
+    set_1 = [(vector, label) for vector, label in zip(vectors, labels) if split_function(vector, column, value)]
+    set_2 = [(vector, label) for vector, label in zip(vectors, labels) if not split_function(vector, column, value)]
 
-    set1 = [row for row in rows if split_function(row)]
-    set2 = [row for row in rows if not split_function(row)]
+    vectors_set_1 = [element[0] for element in set_1]
+    vectors_set_2 = [element[0] for element in set_2]
+    label_set_1 = [element[1] for element in set_1]
+    label_set_2 = [element[1] for element in set_2]
 
-    return set1, set2
+    return vectors_set_1, label_set_1, vectors_set_2, label_set_2
+
+
+def split_function(vector, column, value):
+
+    return vector[column] >= value
+
+
+def log2(x):
+
+    return log(x) / log(2)
+
 
 class DecisionTreeClassifier:
 
