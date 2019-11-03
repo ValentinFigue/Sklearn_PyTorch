@@ -30,24 +30,24 @@ class TorchDecisionTreeClassifier(torch.nn.Module):
 
     def build_tree(self, vectors,labels, func, depth):
         if len(vectors) == 0:
-            return self.DecisionNode()
+            return DecisionNode()
         if depth == 0:
-            return self.DecisionNode(results=self.unique_counts(labels))
+            return DecisionNode(results=self.unique_counts(labels))
 
         current_score = func(vectors)
         best_gain = 0.0
         best_criteria = None
         best_sets = None
-        column_count = len(rows[0]) - 1
+        column_count = len(vectors[0]) - 1
 
         for col in range(0, column_count):
             column_values = {}
-            for row in rows:
-                column_values[row[col]] = 1
+            for vector in vectors:
+                column_values[vector[col]] = 1
             for value in column_values.keys():
-                set1, set2 = self.divide_set(rows, col, value)
+                set1, set2 = self.divide_set(vectors, col, value)
 
-                p = float(len(set1)) / len(rows)
+                p = float(len(set1)) / len(vectors)
                 gain = current_score - p * func(set1) - (1 - p) * func(set2)
                 if gain > best_gain and len(set1) > 0 and len(set2) > 0:
                     best_gain = gain
@@ -57,12 +57,11 @@ class TorchDecisionTreeClassifier(torch.nn.Module):
         if best_gain > 0:
             trueBranch = self.build_tree(best_sets[0], func, depth - 1)
             falseBranch = self.build_tree(best_sets[1], func, depth - 1)
-            return self.DecisionNode(col=best_criteria[0],
+            return DecisionNode(col=best_criteria[0],
                                      value=best_criteria[1],
                                      tb=trueBranch, fb=falseBranch)
         else:
-            return self.DecisionNode(results=self.unique_counts(rows))
-
+            return DecisionNode(results=self.unique_counts(labels))
 
 
 def entropy(labels):
@@ -83,6 +82,16 @@ def unique_counts(labels):
             results[r] = 0
         results[r] += 1
     return results
+
+
+def divide_set(rows, column, value):
+
+    split_function = lambda row: row[column] >= value
+
+    set1 = [row for row in rows if split_function(row)]
+    set2 = [row for row in rows if not split_function(row)]
+
+    return set1, set2
 
 class DecisionTreeClassifier:
 
@@ -258,7 +267,3 @@ class DecisionTreeClassifier:
                 else:
                     branch = tree.fb
             return self.classify(observation, branch)
-
-
-if __name__ == '__main__':
-    pass
