@@ -28,7 +28,7 @@ class TorchDecisionTreeClassifier(torch.nn.Module):
         if depth == 0:
             return DecisionNode(results=unique_counts(labels))
 
-        current_score = func(vectors)
+        current_score = func(labels)
         best_gain = 0.0
         best_criteria = None
         best_sets = None
@@ -42,7 +42,7 @@ class TorchDecisionTreeClassifier(torch.nn.Module):
                 vectors_set_1, label_set_1, vectors_set_2, label_set_2 = divide_set(vectors, labels, col, value)
 
                 p = float(len(vectors_set_1)) / len(vectors)
-                gain = current_score - p * func(vectors_set_1) - (1 - p) * func(vectors_set_1)
+                gain = current_score - p * func(label_set_1) - (1 - p) * func(label_set_2)
                 if gain > best_gain and len(vectors_set_1) > 0 and len(vectors_set_2) > 0:
                     best_gain = gain
                     best_criteria = (col, value)
