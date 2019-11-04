@@ -6,5 +6,5 @@ install:
 
 test:
 	. venv/bin/activate
-	python -m unittest
+	python -m unittest tests
 
