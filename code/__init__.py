@@ -1,1 +1,2 @@
 from .binary_tree import TorchDecisionTreeClassifier
+from .random_forest import TorchRandomForestClassifier

@@ -23,7 +23,8 @@ class TorchRandomForestClassifier(torch.nn.Module):
             list_features = sample_dimensions(sampled_vectors)
             self.trees_features.append(list_features)
             sampled_featured_vectors = torch.index_select(sampled_vectors,1, list_features)
-            self.nb_trees.append(tree.fit(sampled_featured_vectors, sample_labels))
+            tree.fit(sampled_featured_vectors, sample_labels)
+            self.trees.append(tree)
 
     def predict(self, vector):
 
