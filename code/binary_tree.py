@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from math import log
 import torch
 
 from .decision_node import DecisionNode
@@ -66,7 +65,7 @@ class TorchDecisionTreeClassifier(torch.nn.Module):
         if node.results is not None:
             return list(node.results.keys())[0]
         else:
-            if split_function(vector,node.col, node.value):
+            if split_function(vector, node.col, node.value):
                 branch = node.tb
             else:
                 branch = node.fb
