@@ -2,14 +2,8 @@
 from math import log
 import torch
 
-
-class DecisionNode:
-    def __init__(self, col=-1, value=None, results=None, tb=None, fb=None):
-        self.col = col
-        self.value = value
-        self.results = results
-        self.tb = tb
-        self.fb = fb
+from .decision_node import DecisionNode
+from .utils import unique_counts, split_function, divide_set, entropy
 
 
 class TorchDecisionTreeClassifier(torch.nn.Module):
@@ -79,47 +73,6 @@ class TorchDecisionTreeClassifier(torch.nn.Module):
 
             return self.classify(vector, branch)
 
-
-def entropy(labels):
-    results = unique_counts(labels)
-    ent = 0.0
-    for r in results.keys():
-        p = float(results[r]) / len(labels)
-        ent = ent - p * log2(p)
-    return ent
-
-
-def unique_counts(labels):
-    results = {}
-    for label in labels:
-        r = label
-        if r not in results:
-            results[r] = 0
-        results[r] += 1
-    return results
-
-
-def divide_set(vectors, labels, column, value):
-
-    set_1 = [(vector, label) for vector, label in zip(vectors, labels) if split_function(vector, column, value)]
-    set_2 = [(vector, label) for vector, label in zip(vectors, labels) if not split_function(vector, column, value)]
-
-    vectors_set_1 = [element[0] for element in set_1]
-    vectors_set_2 = [element[0] for element in set_2]
-    label_set_1 = [element[1] for element in set_1]
-    label_set_2 = [element[1] for element in set_2]
-
-    return vectors_set_1, label_set_1, vectors_set_2, label_set_2
-
-
-def split_function(vector, column, value):
-
-    return vector[column] >= value
-
-
-def log2(x):
-
-    return log(x) / log(2)
 
 
 # class DecisionTreeClassifier:

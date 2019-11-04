@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
-import random
 import torch
-from math import sqrt
 
 from .binary_tree import TorchDecisionTreeClassifier
+from .utils import sample_vectors, sample_dimensions
 
 
 class TorchRandomForestClassifier(torch.nn.Module):
@@ -35,21 +34,6 @@ class TorchRandomForestClassifier(torch.nn.Module):
 
         return max(set(predictions), key=predictions.count)
 
-
-def sample_vectors(vectors, labels, nb_samples):
-
-    sampled_indices = torch.LongTensor(random.sample(range(len(vectors)), nb_samples))
-    sampled_vectors = torch.index_select(vectors,0, sampled_indices)
-    sampled_labels = torch.index_select(labels,0, sampled_indices)
-
-    return sampled_vectors, sampled_labels
-
-
-def sample_dimensions(vectors) :
-
-    sample_dimension = torch.LongTensor(random.sample(range(len(vectors[0])), int(sqrt(len(vectors[0])))))
-
-    return sample_dimension
 #
 # class RandomForestClassifier(object):
 #
