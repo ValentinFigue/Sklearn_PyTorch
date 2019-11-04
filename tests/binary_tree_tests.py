@@ -19,6 +19,10 @@ class BinaryTreeTest(unittest.TestCase):
         binary_tree.fit(vectors, labels)
         self.assertTrue(binary_tree.root_node.col == 1)
         self.assertTrue(binary_tree.root_node.value == 2)
+        binary_tree = code.TorchDecisionTreeClassifier(10)
+        binary_tree.fit(vectors, labels)
+        self.assertTrue(binary_tree.root_node.tb.tb is None)
+        self.assertTrue(binary_tree.root_node.fb.fb is None)
 
     def test_predict(self):
         binary_tree = code.TorchDecisionTreeClassifier(1)
