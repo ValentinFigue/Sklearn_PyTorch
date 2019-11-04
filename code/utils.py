@@ -7,10 +7,10 @@ import random
 def unique_counts(labels):
     results = {}
     for label in labels:
-        r = label
-        if r not in results:
-            results[r] = 0
-        results[r] += 1
+        value = label.item()
+        if value not in results.keys():
+            results[value] = 0
+        results[value] += 1
     return results
 
 
