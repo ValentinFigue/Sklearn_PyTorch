@@ -29,7 +29,7 @@ class TorchRandomForestClassifier(torch.nn.Module):
 
         predictions = []
         for tree, index_features in zip(self.trees,self.trees_features):
-            sampled_vector = torch.index_select(tree,0,index_features)
+            sampled_vector = torch.index_select(vector,0,index_features)
             predictions.append(tree.predict(sampled_vector))
 
         return max(set(predictions), key=predictions.count)
