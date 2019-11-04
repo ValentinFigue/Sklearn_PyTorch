@@ -2,9 +2,21 @@
 import logging
 import random
 from concurrent.futures import ProcessPoolExecutor
+import torch
 
 import CSVReader
 from DecisionTree import DecisionTreeClassifier
+
+
+class TorchRandomForestClassifier(torch.nn.Module):
+
+
+    def __init__(self,  nb_trees, nb_samples, max_depth=-1):
+
+        self.trees = []
+        self.nb_trees = nb_trees
+        self.nb_samples = nb_samples
+        self.max_depth = max_depth
 
 
 class RandomForestClassifier(object):
