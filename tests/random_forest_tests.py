@@ -17,13 +17,16 @@ class RandomForestTest(unittest.TestCase):
         vectors = torch.FloatTensor([[0,1],[1,2],[4,2],[8,3]])
         labels = torch.LongTensor([0,1,0,0])
         random_forest.fit(vectors, labels)
+        self.assertTrue(len(random_forest.trees) == 10)
+        self.assertTrue(len(random_forest.trees_features) == 10)
 
     def test_predict(self):
-        random_forest = code.TorchRandomForestClassifier(10, 2, 3)
-        vectors = torch.FloatTensor([[0,1],[1,2],[4,2],[8,3]])
+        random_forest = code.TorchRandomForestClassifier(400, 1, 3)
+        vectors = torch.FloatTensor([[0],[1],[4],[8]])
         labels = torch.LongTensor([0,1,0,0])
         random_forest.fit(vectors, labels)
-        random_forest.predict(vectors[0])
+        result = random_forest.predict(vectors[0])
+        self.assertTrue(result == 0)
 
 
 if __name__ == '__main__':
