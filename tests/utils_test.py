@@ -71,6 +71,14 @@ class UtilsTest(unittest.TestCase):
     def test_mean(self):
         values = torch.FloatTensor([[0, 1], [1, 2], [4, 2], [8, 3]])
         self.assertTrue(isinstance(code.mean(values), torch.FloatTensor))
+        self.assertTrue(len(code.mean(values).size()) == 1)
+        self.assertTrue(len(code.mean(values)) == 2)
+        self.assertTrue(code.mean(values)[1] == 2)
+        values = torch.FloatTensor([[0, 1]])
+        self.assertTrue(isinstance(code.mean(values), torch.FloatTensor))
+        self.assertTrue(len(code.mean(values).size()) == 1)
+        self.assertTrue(len(code.mean(values)) == 2)
+        self.assertTrue(code.mean(values)[1] == 1)
 
 
 if __name__ == '__main__':
