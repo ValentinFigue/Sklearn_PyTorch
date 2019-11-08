@@ -64,7 +64,7 @@ def entropy(labels):
 
 def variance(values):
     mean_value = mean(values)
-    return torch.sum(torch.sqrt(torch.pow(values-mean_value,2)))
+    return torch.sum(torch.sqrt(torch.pow(values-mean_value,2))).item()
 
 
 def mean(values):

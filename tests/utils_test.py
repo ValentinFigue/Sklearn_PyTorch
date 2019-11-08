@@ -80,6 +80,11 @@ class UtilsTest(unittest.TestCase):
         self.assertTrue(len(code.mean(values)) == 2)
         self.assertTrue(code.mean(values)[1] == 1)
 
+    def test_variance(self):
+        values = torch.FloatTensor([[0, 1], [1, 2], [4, 2], [8, 3]])
+        self.assertTrue(isinstance(code.variance(values), float))
+        self.assertTrue(code.variance(values) > 0)
+
 
 if __name__ == '__main__':
     unittest.main()
