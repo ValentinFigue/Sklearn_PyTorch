@@ -84,6 +84,10 @@ class UtilsTest(unittest.TestCase):
         values = torch.FloatTensor([[0, 1], [1, 2], [4, 2], [8, 3]])
         self.assertTrue(isinstance(code.variance(values), float))
         self.assertTrue(code.variance(values) > 0)
+        values = torch.FloatTensor([[0, 1], [1, 1], [1, 1], [2, 1]])
+        self.assertTrue(code.variance(values) == 2)
+        values = torch.FloatTensor([[1, 1], [1, 1], [1, 1], [1, 1]])
+        self.assertTrue(code.variance(values) == 0)
 
 
 if __name__ == '__main__':
