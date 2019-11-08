@@ -19,22 +19,22 @@ class TorchRandomForestClassifier(torch.nn.Module):
 
         for _ in range(self.nb_trees):
             tree = TorchDecisionTreeClassifier(self.max_depth)
-            list_features = sample_dimensions(sampled_vectors)
+            list_features = sample_dimensions(vectors)
             self.trees_features.append(list_features)
             if self.bootstrap:
                 sampled_vectors, sample_labels = sample_vectors(vectors, labels, self.nb_samples)
-                sampled_featured_vectors = torch.index_select(sampled_vectors,1, list_features)
+                sampled_featured_vectors = torch.index_select(sampled_vectors, 1, list_features)
                 tree.fit(sampled_featured_vectors, sample_labels)
             else:
-                sampled_featured_vectors = torch.index_select(vectors,1, list_features)
+                sampled_featured_vectors = torch.index_select(vectors, 1, list_features)
                 tree.fit(sampled_featured_vectors, labels)
             self.trees.append(tree)
 
     def predict(self, vector):
 
         predictions = []
-        for tree, index_features in zip(self.trees,self.trees_features):
-            sampled_vector = torch.index_select(vector,0,index_features)
+        for tree, index_features in zip(self.trees, self.trees_features):
+            sampled_vector = torch.index_select(vector, 0, index_features)
             predictions.append(tree.predict(sampled_vector))
 
         return max(set(predictions), key=predictions.count)
@@ -54,7 +54,7 @@ class TorchRandomForestRegressor(torch.nn.Module):
 
         for _ in range(self.nb_trees):
             tree = TorchDecisionTreeRegressor(self.max_depth)
-            list_features = sample_dimensions(sampled_vectors)
+            list_features = sample_dimensions(vectors)
             self.trees_features.append(list_features)
             if self.bootstrap:
                 sampled_vectors, sample_labels = sample_vectors(vectors, values, self.nb_samples)

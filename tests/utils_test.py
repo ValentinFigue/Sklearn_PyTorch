@@ -68,6 +68,10 @@ class UtilsTest(unittest.TestCase):
         sampled_vectors = torch.index_select(vectors, 1, list_features)
         self.assertTrue(sampled_vectors.size()[1] == 1)
 
+    def test_mean(self):
+        values = torch.FloatTensor([[0, 1], [1, 2], [4, 2], [8, 3]])
+        self.assertTrue(isinstance(code.mean(values), torch.FloatTensor))
+
 
 if __name__ == '__main__':
     unittest.main()
