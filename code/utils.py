@@ -60,3 +60,12 @@ def entropy(labels):
         p = float(results[r]) / len(labels)
         ent = ent - p * log2(p)
     return ent
+
+
+def variance(values):
+    mean_value = torch.mean(values, axis=0)
+    return torch.sum(torch.sqrt(torch.pow(values-mean_value,2)))
+
+
+def mean(values):
+    return torch.mean(values, axis=0)
