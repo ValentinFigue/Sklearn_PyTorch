@@ -6,7 +6,7 @@ import torch
 
 
 class RandomForestClassifierTest(unittest.TestCase):
-    """Binary test tree."""
+    """Random forest classifier tests."""
 
     def test_init(self):
         random_forest = source.TorchRandomForestClassifier(10, 2, 3)
@@ -30,7 +30,7 @@ class RandomForestClassifierTest(unittest.TestCase):
 
 
 class RandomForestRegressorTest(unittest.TestCase):
-    """Binary test tree."""
+    """Random forest regressor tests."""
 
     def test_init(self):
         random_forest = source.TorchRandomForestRegressor(10, 2, 3)

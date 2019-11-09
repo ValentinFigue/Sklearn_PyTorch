@@ -6,7 +6,7 @@ import torch
 
 
 class BinaryTreeClassifierTest(unittest.TestCase):
-    """Binary test tree."""
+    """Binary classifier tree test."""
 
     def test_init(self):
         binary_tree = source.TorchDecisionTreeClassifier(1)
@@ -39,7 +39,7 @@ class BinaryTreeClassifierTest(unittest.TestCase):
 
 
 class BinaryTreeRegressorTest(unittest.TestCase):
-    """Binary test tree."""
+    """Binary regressor tree test."""
 
     def test_init(self):
         binary_tree = source.TorchDecisionTreeRegressor(1)
