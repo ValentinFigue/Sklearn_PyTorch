@@ -106,14 +106,14 @@ class TorchDecisionTreeRegressor(torch.nn.Module):
             for vector in vectors:
                 column_values[vector[col]] = 1
             for value in column_values.keys():
-                vectors_set_1, label_set_1, vectors_set_2, label_set_2 = divide_set(vectors, values, col, value)
+                vectors_set_1, values_set_1, vectors_set_2, values_set_2 = divide_set(vectors, values, col, value)
 
                 p = float(len(vectors_set_1)) / len(vectors)
-                gain = current_score - p * func(label_set_1) - (1 - p) * func(label_set_2)
+                gain = current_score - p * func(values_set_1) - (1 - p) * func(vectors_set_2)
                 if gain > best_gain and len(vectors_set_1) > 0 and len(vectors_set_2) > 0:
                     best_gain = gain
                     best_criteria = (col, value)
-                    best_sets = ((vectors_set_1,label_set_1), (vectors_set_2,label_set_2))
+                    best_sets = ((vectors_set_1,values_set_1), (vectors_set_2,values_set_2))
 
         if best_gain > 0:
             true_branch = self.build_tree(best_sets[0][0], best_sets[0][1], func, depth - 1)
@@ -124,3 +124,18 @@ class TorchDecisionTreeRegressor(torch.nn.Module):
         else:
             return DecisionNode(results=mean(values))
 
+    def predict(self, vector):
+
+        return self.regress(vector, self.root_node)
+
+    def regress(self, vector, node):
+
+        if node.results is not None:
+            return node.results
+        else:
+            if split_function(vector, node.col, node.value):
+                branch = node.tb
+            else:
+                branch = node.fb
+
+            return self.regress(vector, branch)

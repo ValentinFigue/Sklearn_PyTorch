@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# code documentation build configuration file, created by
+# source documentation build configuration file, created by
 # sphinx-quickstart on Mon Apr 16 21:22:43 2012.
 #
 # This file is execfile()d with the current directory set to its containing dir.

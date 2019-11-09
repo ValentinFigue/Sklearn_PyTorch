@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from .context import code
+from .context import source
 
 import unittest
 import torch
@@ -9,11 +9,11 @@ class RandomForestTest(unittest.TestCase):
     """Binary test tree."""
 
     def test_init(self):
-        random_forest = code.TorchRandomForestClassifier(10, 2, 3)
+        random_forest = source.TorchRandomForestClassifier(10, 2, 3)
         self.assertTrue(random_forest.max_depth == 3)
 
     def test_fit(self):
-        random_forest = code.TorchRandomForestClassifier(10, 2, 3)
+        random_forest = source.TorchRandomForestClassifier(10, 2, 3)
         vectors = torch.FloatTensor([[0,1],[1,2],[4,2],[8,3]])
         labels = torch.LongTensor([0,1,0,0])
         random_forest.fit(vectors, labels)
@@ -21,7 +21,7 @@ class RandomForestTest(unittest.TestCase):
         self.assertTrue(len(random_forest.trees_features) == 10)
 
     def test_predict(self):
-        random_forest = code.TorchRandomForestClassifier(400, 1, 3)
+        random_forest = source.TorchRandomForestClassifier(400, 1, 3)
         vectors = torch.FloatTensor([[0],[1],[4],[8]])
         labels = torch.LongTensor([0,1,0,0])
         random_forest.fit(vectors, labels)
