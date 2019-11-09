@@ -1,3 +1,3 @@
 from .binary_tree_tests import BinaryTreeClassifierTest, BinaryTreeRegressorTest
-from .random_forest_tests import RandomForestTest
+from .random_forest_tests import RandomForestClassifierTest, RandomForestRegressorTest
 from .utils_test import UtilsTest
