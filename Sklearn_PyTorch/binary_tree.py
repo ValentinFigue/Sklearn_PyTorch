@@ -9,12 +9,12 @@ class TorchDecisionTreeClassifier(torch.nn.Module):
     """
     Torch decision tree object used to solve classification problem. This object implements the fitting and prediction
     function which can be used with torch tensors. The binary tree is based on
-    :class:`source.decision_node.DecisionNode` which are built during the :func:`fit` and called recursively during the
+    :class:`Sklearn_PyTorch.decision_node.DecisionNode` which are built during the :func:`fit` and called recursively during the
     :func:`predict`.
 
     Args:
         max_depth (:class:`int`): The maximum depth which corresponds to the maximum successive number of
-            :class:`source.decision_node.DecisionNode`.
+            :class:`Sklearn_PyTorch.decision_node.DecisionNode`.
 
     """
     def __init__(self, max_depth=-1):
@@ -24,7 +24,7 @@ class TorchDecisionTreeClassifier(torch.nn.Module):
     def fit(self, vectors, labels, criterion=None):
         """
         Function which must be used after the initialisation to fit the binary tree and build the successive
-        :class:`source.decision_node.DecisionNode` to solve a specific classification problem.
+        :class:`Sklearn_PyTorch.decision_node.DecisionNode` to solve a specific classification problem.
 
         Args:
             vectors (:class:`torch.FloatTensor`): Vectors tensor used to fit the decision tree. It represents the data
@@ -32,7 +32,7 @@ class TorchDecisionTreeClassifier(torch.nn.Module):
             labels (:class:`torch.LongTensor`): Labels tensor used to fit the decision tree. It represents the labels
                 associated to each vectors and must correspond to the following shape [num_vectors].
             criterion (:class:`function`): Optional function used to optimize the splitting for each
-                :class:`source.decision_node.DecisionNode`. If none given, the entropy function is used.
+                :class:`Sklearn_PyTorch.decision_node.DecisionNode`. If none given, the entropy function is used.
         """
         if len(vectors) < 1:
             raise ValueError("Not enough samples in the given dataset")
@@ -84,7 +84,7 @@ class TorchDecisionTreeClassifier(torch.nn.Module):
     def predict(self, vector):
         """
         Function which must be used after the the fitting of the binary tree. It calls recursively the different
-        :class:`source.decision_node.DecisionNode` to classify the vector.
+        :class:`Sklearn_PyTorch.decision_node.DecisionNode` to classify the vector.
 
         Args:
             vector(:class:`torch.FloatTensor`): Vectors tensor which must be classified. It represents the data
@@ -115,12 +115,12 @@ class TorchDecisionTreeRegressor(torch.nn.Module):
     """
     Torch decision tree object used to solve regression problem. This object implements the fitting and prediction
     function which can be used with torch tensors. The binary tree is based on
-    :class:`source.decision_node.DecisionNode` which are built during the :func:`fit` and called recursively during the
+    :class:`Sklearn_PyTorch.decision_node.DecisionNode` which are built during the :func:`fit` and called recursively during the
     :func:`predict`.
 
     Args:
         max_depth (:class:`int`): The maximum depth which corresponds to the maximum successive number of
-            :class:`source.decision_node.DecisionNode`.
+            :class:`Sklearn_PyTorch.decision_node.DecisionNode`.
 
     """
     def __init__(self, max_depth=-1):
@@ -130,7 +130,7 @@ class TorchDecisionTreeRegressor(torch.nn.Module):
     def fit(self, vectors, values, criterion=None):
         """
         Function which must be used after the initialisation to fit the binary tree and build the successive
-        :class:`source.decision_node.DecisionNode` to solve a specific regression problem.
+        :class:`Sklearn_PyTorch.decision_node.DecisionNode` to solve a specific regression problem.
 
         Args:
             vectors(:class:`torch.FloatTensor`): Vectors tensor used to fit the decision tree. It represents the data
@@ -139,7 +139,7 @@ class TorchDecisionTreeRegressor(torch.nn.Module):
                 associated to each vectors and must correspond to the following shape (num_vectors,
                 num_dimensions_values).
             criterion(:class:`function`): Optional function used to optimize the splitting for each
-                :class:`source.decision_node.DecisionNode`. If none given, the variance function is used.
+                :class:`Sklearn_PyTorch.decision_node.DecisionNode`. If none given, the variance function is used.
         """
         if len(vectors) < 1:
             raise ValueError("Not enough samples in the given dataset")
@@ -191,7 +191,7 @@ class TorchDecisionTreeRegressor(torch.nn.Module):
     def predict(self, vector):
         """
         Function which must be used after the the fitting of the binary tree. It calls recursively the different
-        :class:`source.decision_node.DecisionNode` to regress the vector.
+        :class:`Sklearn_PyTorch.decision_node.DecisionNode` to regress the vector.
 
         Args:
             vector(:class:`torch.FloatTensor`): Vectors tensor which must be regressed. It represents the data

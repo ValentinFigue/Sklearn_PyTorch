@@ -10,13 +10,13 @@ with open('LICENSE') as f:
     license = f.read()
 
 setup(
-    name='source',
+    name='Sklearn_PyTorch',
     version='0.1.0',
-    description='Sample package for Python-Guide.org',
+    description='Sklearn_Pytorch package to use Sklearn model within Pytorch',
     long_description=readme,
     author='Valentin Figué',
     author_email='valentin.figue@polytechnique.edu',
-    url='https://github.com/ValentinFigue/Sklearn-PyTorch',
+    url='https://github.com/ValentinFigue/Sklearn_PyTorch',
     license=license,
     packages=find_packages(exclude=('tests', 'docs'))
 )
