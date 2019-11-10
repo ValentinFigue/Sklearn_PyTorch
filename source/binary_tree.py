@@ -26,11 +26,11 @@ class TorchDecisionTreeClassifier(torch.nn.Module):
         :class:`DecisionNode` to solve a specific classification problem.
 
         Args:
-            vectors(:class:`torch.FloatTensor`): Vectors tensor used to fit the decision tree. It represents the data
-                and must correspond to the following shape (num_vectors, num_dimensions).
-            labels(:class:'torch.LongTensor'): Labels tensor used to fit the decision tree. It represents the labels
-                associated to each vectors and must correspond to the following shape (num_vectors).
-            criterion(:class:`function`): Optional function used to optimize the splitting for each
+            vectors (:class:`torch.FloatTensor`): Vectors tensor used to fit the decision tree. It represents the data
+                and must correspond to the following shape [num_vectors, num_dimensions].
+            labels (:class:`torch.LongTensor`): Labels tensor used to fit the decision tree. It represents the labels
+                associated to each vectors and must correspond to the following shape [num_vectors].
+            criterion (:class:`function`): Optional function used to optimize the splitting for each
                 :class:`DecisionNode`. If none given, the entropy function is used.
         """
         if len(vectors) < 1:
@@ -133,7 +133,7 @@ class TorchDecisionTreeRegressor(torch.nn.Module):
         Args:
             vectors(:class:`torch.FloatTensor`): Vectors tensor used to fit the decision tree. It represents the data
                 and must correspond to the following shape (num_vectors, num_dimensions_vectors).
-            values(:class:'torch.FloatTensor'): Values tensor used to fit the decision tree. It represents the values
+            values(:class:`torch.FloatTensor`): Values tensor used to fit the decision tree. It represents the values
                 associated to each vectors and must correspond to the following shape (num_vectors,
                 num_dimensions_values).
             criterion(:class:`function`): Optional function used to optimize the splitting for each

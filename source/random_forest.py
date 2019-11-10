@@ -34,9 +34,9 @@ class TorchRandomForestClassifier(torch.nn.Module):
         :class:`TorchDecisionTreeClassifier` to solve a specific classification problem.
 
         Args:
-            vectors(:class:`torch.FloatTensor`): Vectors tensor used to fit the decision tree. It represents the data
+            vectors(:class:`torch.FloatTensor`): Vectors tensor used to fit the random forest. It represents the data
                 and must correspond to the following shape (num_vectors, num_dimensions).
-            labels(:class:'torch.LongTensor'): Labels tensor used to fit the decision tree. It represents the labels
+            labels (:class:`torch.LongTensor`): Labels tensor used to fit the decision tree. It represents the labels
                 associated to each vectors and must correspond to the following shape (num_vectors).
 
         """
@@ -105,7 +105,7 @@ class TorchRandomForestRegressor(torch.nn.Module):
         Args:
             vectors(:class:`torch.FloatTensor`): Vectors tensor used to fit the decision tree. It represents the data
                 and must correspond to the following shape (num_vectors, num_dimensions_vectors).
-            values(:class:'torch.FloatTensor'): Values tensor used to fit the decision tree. It represents the values
+            values(:class:`torch.FloatTensor`): Values tensor used to fit the decision tree. It represents the values
                 associated to each vectors and must correspond to the following shape (num_vectors,
                 num_dimensions_values).
 
