@@ -1,0 +1,209 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>BinaryTree : &#8212; Sklearn-Pytorch v0.1.0 documentation</title>
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="RandomForest :" href="random_forest.html" />
+    <link rel="prev" title="DecisionNode :" href="decision_node.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="random_forest.html" title="RandomForest :"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="decision_node.html" title="DecisionNode :"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Sklearn-Pytorch v0.1.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="contents.html" accesskey="U">Developer documentation :</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="binarytree">
+<h1>BinaryTree :<a class="headerlink" href="#binarytree" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="source.binary_tree.TorchDecisionTreeClassifier">
+<em class="property">class </em><code class="sig-prename descclassname">source.binary_tree.</code><code class="sig-name descname">TorchDecisionTreeClassifier</code><span class="sig-paren">(</span><em class="sig-param">max_depth=-1</em><span class="sig-paren">)</span><a class="headerlink" href="#source.binary_tree.TorchDecisionTreeClassifier" title="Permalink to this definition">¶</a></dt>
+<dd><p>Torch decision tree object used to solve classification problem. This object implements the fitting and prediction
+function which can be used with torch tensors. The binary tree is based on
+<a class="reference internal" href="decision_node.html#source.decision_node.DecisionNode" title="source.decision_node.DecisionNode"><code class="xref py py-class docutils literal notranslate"><span class="pre">source.decision_node.DecisionNode</span></code></a> which are built during the <a class="reference internal" href="#source.binary_tree.TorchDecisionTreeClassifier.fit" title="source.binary_tree.TorchDecisionTreeClassifier.fit"><code class="xref py py-func docutils literal notranslate"><span class="pre">fit()</span></code></a> and called recursively during the
+<a class="reference internal" href="#source.binary_tree.TorchDecisionTreeClassifier.predict" title="source.binary_tree.TorchDecisionTreeClassifier.predict"><code class="xref py py-func docutils literal notranslate"><span class="pre">predict()</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>max_depth</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>) – The maximum depth which corresponds to the maximum successive number of
+<a class="reference internal" href="decision_node.html#source.decision_node.DecisionNode" title="source.decision_node.DecisionNode"><code class="xref py py-class docutils literal notranslate"><span class="pre">source.decision_node.DecisionNode</span></code></a>.</p>
+</dd>
+</dl>
+<dl class="method">
+<dt id="source.binary_tree.TorchDecisionTreeClassifier.fit">
+<code class="sig-name descname">fit</code><span class="sig-paren">(</span><em class="sig-param">vectors</em>, <em class="sig-param">labels</em>, <em class="sig-param">criterion=None</em><span class="sig-paren">)</span><a class="headerlink" href="#source.binary_tree.TorchDecisionTreeClassifier.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function which must be used after the initialisation to fit the binary tree and build the successive
+<a class="reference internal" href="decision_node.html#source.decision_node.DecisionNode" title="source.decision_node.DecisionNode"><code class="xref py py-class docutils literal notranslate"><span class="pre">source.decision_node.DecisionNode</span></code></a> to solve a specific classification problem.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vectors</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">torch.FloatTensor</span></code>) – Vectors tensor used to fit the decision tree. It represents the data
+and must correspond to the following shape [num_vectors, num_dimensions].</p></li>
+<li><p><strong>labels</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">torch.LongTensor</span></code>) – Labels tensor used to fit the decision tree. It represents the labels
+associated to each vectors and must correspond to the following shape [num_vectors].</p></li>
+<li><p><strong>criterion</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">function</span></code>) – Optional function used to optimize the splitting for each
+<a class="reference internal" href="decision_node.html#source.decision_node.DecisionNode" title="source.decision_node.DecisionNode"><code class="xref py py-class docutils literal notranslate"><span class="pre">source.decision_node.DecisionNode</span></code></a>. If none given, the entropy function is used.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="source.binary_tree.TorchDecisionTreeClassifier.predict">
+<code class="sig-name descname">predict</code><span class="sig-paren">(</span><em class="sig-param">vector</em><span class="sig-paren">)</span><a class="headerlink" href="#source.binary_tree.TorchDecisionTreeClassifier.predict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function which must be used after the the fitting of the binary tree. It calls recursively the different
+<a class="reference internal" href="decision_node.html#source.decision_node.DecisionNode" title="source.decision_node.DecisionNode"><code class="xref py py-class docutils literal notranslate"><span class="pre">source.decision_node.DecisionNode</span></code></a> to classify the vector.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>vector</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">torch.FloatTensor</span></code>) – Vectors tensor which must be classified. It represents the data
+and must correspond to the following shape (num_dimensions).</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Tensor which corresponds to the label predicted by the binary tree.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">torch.LongTensor</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="source.binary_tree.TorchDecisionTreeRegressor">
+<em class="property">class </em><code class="sig-prename descclassname">source.binary_tree.</code><code class="sig-name descname">TorchDecisionTreeRegressor</code><span class="sig-paren">(</span><em class="sig-param">max_depth=-1</em><span class="sig-paren">)</span><a class="headerlink" href="#source.binary_tree.TorchDecisionTreeRegressor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Torch decision tree object used to solve regression problem. This object implements the fitting and prediction
+function which can be used with torch tensors. The binary tree is based on
+<a class="reference internal" href="decision_node.html#source.decision_node.DecisionNode" title="source.decision_node.DecisionNode"><code class="xref py py-class docutils literal notranslate"><span class="pre">source.decision_node.DecisionNode</span></code></a> which are built during the <a class="reference internal" href="#source.binary_tree.TorchDecisionTreeRegressor.fit" title="source.binary_tree.TorchDecisionTreeRegressor.fit"><code class="xref py py-func docutils literal notranslate"><span class="pre">fit()</span></code></a> and called recursively during the
+<a class="reference internal" href="#source.binary_tree.TorchDecisionTreeRegressor.predict" title="source.binary_tree.TorchDecisionTreeRegressor.predict"><code class="xref py py-func docutils literal notranslate"><span class="pre">predict()</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>max_depth</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>) – The maximum depth which corresponds to the maximum successive number of
+<a class="reference internal" href="decision_node.html#source.decision_node.DecisionNode" title="source.decision_node.DecisionNode"><code class="xref py py-class docutils literal notranslate"><span class="pre">source.decision_node.DecisionNode</span></code></a>.</p>
+</dd>
+</dl>
+<dl class="method">
+<dt id="source.binary_tree.TorchDecisionTreeRegressor.fit">
+<code class="sig-name descname">fit</code><span class="sig-paren">(</span><em class="sig-param">vectors</em>, <em class="sig-param">values</em>, <em class="sig-param">criterion=None</em><span class="sig-paren">)</span><a class="headerlink" href="#source.binary_tree.TorchDecisionTreeRegressor.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function which must be used after the initialisation to fit the binary tree and build the successive
+<a class="reference internal" href="decision_node.html#source.decision_node.DecisionNode" title="source.decision_node.DecisionNode"><code class="xref py py-class docutils literal notranslate"><span class="pre">source.decision_node.DecisionNode</span></code></a> to solve a specific regression problem.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vectors</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">torch.FloatTensor</span></code>) – Vectors tensor used to fit the decision tree. It represents the data
+and must correspond to the following shape (num_vectors, num_dimensions_vectors).</p></li>
+<li><p><strong>values</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">torch.FloatTensor</span></code>) – Values tensor used to fit the decision tree. It represents the values
+associated to each vectors and must correspond to the following shape (num_vectors,
+num_dimensions_values).</p></li>
+<li><p><strong>criterion</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">function</span></code>) – Optional function used to optimize the splitting for each
+<a class="reference internal" href="decision_node.html#source.decision_node.DecisionNode" title="source.decision_node.DecisionNode"><code class="xref py py-class docutils literal notranslate"><span class="pre">source.decision_node.DecisionNode</span></code></a>. If none given, the variance function is used.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="source.binary_tree.TorchDecisionTreeRegressor.predict">
+<code class="sig-name descname">predict</code><span class="sig-paren">(</span><em class="sig-param">vector</em><span class="sig-paren">)</span><a class="headerlink" href="#source.binary_tree.TorchDecisionTreeRegressor.predict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function which must be used after the the fitting of the binary tree. It calls recursively the different
+<a class="reference internal" href="decision_node.html#source.decision_node.DecisionNode" title="source.decision_node.DecisionNode"><code class="xref py py-class docutils literal notranslate"><span class="pre">source.decision_node.DecisionNode</span></code></a> to regress the vector.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>vector</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">torch.FloatTensor</span></code>) – Vectors tensor which must be regressed. It represents the data
+and must correspond to the following shape (num_dimensions).</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Tensor which corresponds to the value regressed by the binary tree.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">torch.FloatTensor</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="decision_node.html"
+                        title="previous chapter">DecisionNode :</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="random_forest.html"
+                        title="next chapter">RandomForest :</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/binary_tree.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="random_forest.html" title="RandomForest :"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="decision_node.html" title="DecisionNode :"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Sklearn-Pytorch v0.1.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="contents.html" >Developer documentation :</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2019, Valentin Figué.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.1.
+    </div>
+  </body>
+</html>
