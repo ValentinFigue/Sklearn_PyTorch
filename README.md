@@ -29,7 +29,7 @@ You can install easily the package and its dependencies directly through pip :
 python setup.py install
 ```
 
-The package will be automatically integrated in your python and be directly imported as other usual packages such as numpy :
+The package will be automatically integrated in your python and can be directly imported as other usual packages such as numpy :
 
 ```python
 import Sklearn_PyTorch
@@ -49,13 +49,36 @@ In the case, you prefer use this package and its dependencies in a virtual envir
 make install
 ```
 
-Once you've downloaded the different dependencies you can test the consistency of the package with following test commands : 
+Once you've downloaded the different dependencies you can test the consistency of the package with the following test command : 
 
 ```console
 make tests
 ```
 
 ## Examples
+
+The code below shows quickly how to use the library to use random forest on the regression problem.
+
+```python
+# Import of the model
+from Sklearn_PyTorch import TorchRandomForestClassifier
+
+# Initialisation of the model
+my_model = TorchRandomForestClassifier(nb_trees=100, nb_samples=3, max_depth=5, bootstrap=True)
+
+# Definition of the input data
+import torch
+my_data = torch.FloatTensor([[0,1,2.4],[1,2,1],[4,2,0.2],[8,3,0.4], [4,1,0.4]])
+my_label = torch.LongTensor([0,1,0,0,1])
+
+# Fitting function
+my_model.fit(my_data, my_label)
+
+# Prediction function
+my_vector = torch.FloatTensor([1,2,1.4])
+my_result = my_model.predict(my_vector)
+
+```
 
 ## Documentation
 
