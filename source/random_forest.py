@@ -8,12 +8,15 @@ from .utils import sample_vectors, sample_dimensions
 class TorchRandomForestClassifier(torch.nn.Module):
     """
     Torch random forest object used to solve classification problem. This object implements the fitting and prediction
-    function which can be used with torch tensors. The random forest is based on :class:`TorchDecisionTreeClassifier`
-    which are built during the :func:`fit` and called recursively during the :func:`predict`.
+    function which can be used with torch tensors. The random forest is based on
+    :class:`source.binary_tree.TorchDecisionTreeClassifier` which are built during the :func:`fit` and called
+    recursively during the :func:`predict`.
 
     Args:
-        nb_trees (:class:`int`): Number of :class:`TorchDecisionTreeClassifier` used to fit the classification problem.
-        nb_samples (:class:`int`): Number of vector samples used to fit each :class:`TorchDecisionTreeClassifier`.
+        nb_trees (:class:`int`): Number of :class:`source.binary_tree.TorchDecisionTreeClassifier` used to fit the
+            classification problem.
+        nb_samples (:class:`int`): Number of vector samples used to fit each
+            :class:`source.binary_tree.TorchDecisionTreeClassifier`.
         max_depth (:class:`int`): The maximum depth which corresponds to the maximum successive number of
             :class:`DecisionNode`.
         bootstrap (:class:`bool`): If set to true, a sample of the dimensions of the input vectors are made during the
@@ -31,7 +34,7 @@ class TorchRandomForestClassifier(torch.nn.Module):
     def fit(self, vectors, labels):
         """
         Function which must be used after the initialisation to fit the random forest and build the successive
-        :class:`TorchDecisionTreeClassifier` to solve a specific classification problem.
+        :class:`source.binary_tree.TorchDecisionTreeClassifier` to solve a specific classification problem.
 
         Args:
             vectors(:class:`torch.FloatTensor`): Vectors tensor used to fit the random forest. It represents the data
@@ -56,7 +59,7 @@ class TorchRandomForestClassifier(torch.nn.Module):
     def predict(self, vector):
         """
         Function which must be used after the the fitting of the random forest. It calls recursively the different
-        :class:`TorchDecisionTreeClassifier` to classify the vector.
+        :class:`source.binary_tree.TorchDecisionTreeClassifier` to classify the vector.
 
         Args:
             vector(:class:`torch.FloatTensor`): Vectors tensor which must be classified. It represents the data
@@ -77,14 +80,17 @@ class TorchRandomForestClassifier(torch.nn.Module):
 class TorchRandomForestRegressor(torch.nn.Module):
     """
     Torch random forest object used to solve regression problem. This object implements the fitting and prediction
-    function which can be used with torch tensors. The random forest is based on :class:`TorchDecisionTreeRegressor`
-    which are built during the :func:`fit` and called recursively during the :func:`predict`.
+    function which can be used with torch tensors. The random forest is based on
+    :class:`source.binary_tree.TorchDecisionTreeRegressor` which are built during the :func:`fit` and called
+    recursively during the :func:`predict`.
 
     Args:
-        nb_trees (:class:`int`): Number of :class:`TorchDecisionTreeRegressor` used to fit the classification problem.
-        nb_samples (:class:`int`): Number of vector samples used to fit each :class:`TorchDecisionTreeRegressor`.
+        nb_trees (:class:`int`): Number of :class:`source.binary_tree.TorchDecisionTreeRegressor` used to fit the
+            classification problem.
+        nb_samples (:class:`int`): Number of vector samples used to fit each
+            :class:`source.binary_tree.TorchDecisionTreeRegressor`.
         max_depth (:class:`int`): The maximum depth which corresponds to the maximum successive number of
-            :class:`DecisionNode`.
+            :class:`source.decision_node.DecisionNode`.
         bootstrap (:class:`bool`): If set to true, a sample of the dimensions of the input vectors are made during the
             fitting and the prediction.
 
@@ -100,7 +106,7 @@ class TorchRandomForestRegressor(torch.nn.Module):
     def fit(self, vectors, values):
         """
         Function which must be used after the initialisation to fit the random forest and build the successive
-        :class:`TorchDecisionTreeRegressor` to solve a specific classification problem.
+        :class:`source.binary_tree.TorchDecisionTreeRegressor` to solve a specific classification problem.
 
         Args:
             vectors(:class:`torch.FloatTensor`): Vectors tensor used to fit the decision tree. It represents the data
@@ -126,7 +132,7 @@ class TorchRandomForestRegressor(torch.nn.Module):
     def predict(self, vector):
         """
         Function which must be used after the the fitting of the random forest. It calls recursively the different
-        :class:`TorchDecisionTreeRegressor` to regress the vector.
+        :class:`source.binary_tree.TorchDecisionTreeRegressor` to regress the vector.
 
         Args:
             vector(:class:`torch.FloatTensor`): Vectors tensor which must be regressed. It represents the data
