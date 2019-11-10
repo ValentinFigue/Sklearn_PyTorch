@@ -77,7 +77,6 @@ my_model.fit(my_data, my_label)
 # Prediction function
 my_vector = torch.FloatTensor([1,2,1.4])
 my_result = my_model.predict(my_vector)
-
 ```
 
 ## Documentation
