@@ -23,7 +23,7 @@ class TorchDecisionTreeClassifier(torch.nn.Module):
     def fit(self, vectors, labels, criterion=None):
         """
         Function which must be used after the initialisation to fit the binary tree and build the successive
-        :class:`DecisionNode` to build a specific classification problem.
+        :class:`DecisionNode` to solve a specific classification problem.
 
         Args:
             vectors(:class:`torch.FloatTensor`): Vectors tensor used to fit the decision tree. It represents the data
@@ -128,7 +128,7 @@ class TorchDecisionTreeRegressor(torch.nn.Module):
     def fit(self, vectors, values, criterion=None):
         """
         Function which must be used after the initialisation to fit the binary tree and build the successive
-        :class:`DecisionNode` to build a specific regression problem.
+        :class:`DecisionNode` to solve a specific regression problem.
 
         Args:
             vectors(:class:`torch.FloatTensor`): Vectors tensor used to fit the decision tree. It represents the data
