@@ -81,7 +81,14 @@ my_result = my_model.predict(my_vector)
 
 ## Documentation
 
-A quick documentation generated through sphinx can be visualised by clicking [here](docs/_build/html/index.html) !
+The documentation can be generated through sphinx via the following commands : 
+
+```console
+cd docs
+make html
+```
+
+Once the documentation generated, you can read it by opening the *docs/_build/html/index.rst* in a web browser.
 
 ## The future
 
