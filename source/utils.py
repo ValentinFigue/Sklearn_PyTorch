@@ -5,6 +5,9 @@ import random
 
 
 def unique_counts(labels):
+    """
+    Unique count function used to count labels.
+    """
     results = {}
     for label in labels:
         value = label.item()
@@ -15,7 +18,9 @@ def unique_counts(labels):
 
 
 def divide_set(vectors, labels, column, value):
-
+    """
+    Divide the sets into two different sets along a specific dimension and value.
+    """
     set_1 = [(vector, label) for vector, label in zip(vectors, labels) if split_function(vector, column, value)]
     set_2 = [(vector, label) for vector, label in zip(vectors, labels) if not split_function(vector, column, value)]
 
@@ -28,17 +33,23 @@ def divide_set(vectors, labels, column, value):
 
 
 def split_function(vector, column, value):
-
+    """
+    Split function
+    """
     return vector[column] >= value
 
 
 def log2(x):
-
+    """
+    Log2 function
+    """
     return log(x) / log(2)
 
 
 def sample_vectors(vectors, labels, nb_samples):
-
+    """
+    Sample vectors and labels uniformly.
+    """
     sampled_indices = torch.LongTensor(random.sample(range(len(vectors)), nb_samples))
     sampled_vectors = torch.index_select(vectors,0, sampled_indices)
     sampled_labels = torch.index_select(labels,0, sampled_indices)
@@ -47,13 +58,18 @@ def sample_vectors(vectors, labels, nb_samples):
 
 
 def sample_dimensions(vectors):
-
+    """
+    Sample vectors along dimension uniformly.
+    """
     sample_dimension = torch.LongTensor(random.sample(range(len(vectors[0])), int(sqrt(len(vectors[0])))))
 
     return sample_dimension
 
 
 def entropy(labels):
+    """
+    Entropy function.
+    """
     results = unique_counts(labels)
     ent = 0.0
     for r in results.keys():
@@ -63,6 +79,9 @@ def entropy(labels):
 
 
 def variance(values):
+    """
+    Variance function.
+    """
     mean_value = mean(values)
     var = 0.0
     for value in values:
@@ -71,6 +90,9 @@ def variance(values):
 
 
 def mean(values):
+    """
+    Mean function.
+    """
     m = 0.0
     for value in values:
         m = m + value/len(values)

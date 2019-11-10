@@ -12,7 +12,8 @@ class TorchDecisionTreeClassifier(torch.nn.Module):
     during the :function:`fit` and called recursively during the :function:`predict`.
 
     Args:
-        max_depth (:class:`int`): The maximum depth which corresponds to the maximum number of decision node.
+        max_depth (:class:`int`): The maximum depth which corresponds to the maximum successive number of
+            :class:`DecisionNode`.
 
     """
     def __init__(self, max_depth=-1):
@@ -20,6 +21,18 @@ class TorchDecisionTreeClassifier(torch.nn.Module):
         self.max_depth = max_depth
 
     def fit(self, vectors, labels, criterion=None):
+        """
+        Function which must be used after the initialisation to fit the binary tree and build the successive
+        :class:`DecisionNode` to build a specific classification problem.
+
+        Args:
+            vectors(:class:`torch.FloatTensor`): Vectors tensor used to fit the decision tree. It represents the data
+                and must correspond to the following shape (num_vectors, num_dimensions).
+            labels(:class:'torch.LongTensor'): Labels tensor used to fit the decision tree. It represents the labels
+                associated to each vectors and must correspond to the following shape (num_vectors).
+            criterion(:class:`function`): Optional function used to optimize the splitting for each
+                :class:`DecisionNode`. If none given, the entropy function is used.
+        """
         if len(vectors) < 1:
             raise ValueError("Not enough samples in the given dataset")
         if len(vectors) != len(labels):
@@ -30,6 +43,9 @@ class TorchDecisionTreeClassifier(torch.nn.Module):
         self._root_node = self._build_tree(vectors, labels, criterion, self.max_depth)
 
     def _build_tree(self, vectors, labels, func, depth):
+        """
+        Private recursive function used to build the tree.
+        """
         if len(vectors) == 0:
             return DecisionNode()
         if depth == 0:
@@ -69,7 +85,9 @@ class TorchDecisionTreeClassifier(torch.nn.Module):
         return self._classify(vector, self._root_node)
 
     def _classify(self, vector, node):
-
+        """
+        Private recursive function used to classify with the tree.
+        """
         if node.results is not None:
             return list(node.results.keys())[0]
         else:
@@ -98,6 +116,9 @@ class TorchDecisionTreeRegressor(torch.nn.Module):
         self._root_node = self._build_tree(vectors, values, criterion, self.max_depth)
 
     def _build_tree(self, vectors, values, func, depth):
+        """
+        Private recursive function used to build the tree.
+        """
         if len(vectors) == 0:
             return DecisionNode()
         if depth == 0:
@@ -137,7 +158,9 @@ class TorchDecisionTreeRegressor(torch.nn.Module):
         return self._regress(vector, self._root_node)
 
     def _regress(self, vector, node):
-
+        """
+        Private recursive function used to regress on the tree.
+        """
         if node.results is not None:
             return node.results
         else:
