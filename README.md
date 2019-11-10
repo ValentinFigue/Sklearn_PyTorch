@@ -81,6 +81,8 @@ my_result = my_model.predict(my_vector)
 
 ## Documentation
 
+A quick documentation generated through sphinx can be visualised by clicking [here](docs/_build/html/index.html) !
+
 ## The future
 
 Feel free to share and add some new features. I've created this package for fun and be pleased to help any one who tries to bring some new stuffs !
