@@ -17,12 +17,12 @@ class BinaryTreeClassifierTest(unittest.TestCase):
         vectors = torch.FloatTensor([[0,1],[0,2]])
         labels = torch.LongTensor([0,1])
         binary_tree.fit(vectors, labels)
-        self.assertTrue(binary_tree.root_node.col == 1)
-        self.assertTrue(binary_tree.root_node.value == 2)
+        self.assertTrue(binary_tree._root_node.col == 1)
+        self.assertTrue(binary_tree._root_node.value == 2)
         binary_tree = source.TorchDecisionTreeClassifier(10)
         binary_tree.fit(vectors, labels)
-        self.assertTrue(binary_tree.root_node.tb.tb is None)
-        self.assertTrue(binary_tree.root_node.fb.fb is None)
+        self.assertTrue(binary_tree._root_node.tb.tb is None)
+        self.assertTrue(binary_tree._root_node.fb.fb is None)
 
     def test_predict(self):
         binary_tree = source.TorchDecisionTreeClassifier(1)
@@ -50,12 +50,12 @@ class BinaryTreeRegressorTest(unittest.TestCase):
         vectors = torch.FloatTensor([[0,1],[0,2]])
         values = torch.FloatTensor([0,1])
         binary_tree.fit(vectors, values)
-        self.assertTrue(binary_tree.root_node.col == 1)
-        self.assertTrue(binary_tree.root_node.value == 2)
+        self.assertTrue(binary_tree._root_node.col == 1)
+        self.assertTrue(binary_tree._root_node.value == 2)
         binary_tree = source.TorchDecisionTreeClassifier(10)
         binary_tree.fit(vectors, values)
-        self.assertTrue(binary_tree.root_node.tb.tb is None)
-        self.assertTrue(binary_tree.root_node.fb.fb is None)
+        self.assertTrue(binary_tree._root_node.tb.tb is None)
+        self.assertTrue(binary_tree._root_node.fb.fb is None)
 
     def test_predict(self):
         binary_tree = source.TorchDecisionTreeRegressor(1)

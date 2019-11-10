@@ -6,9 +6,17 @@ from .utils import unique_counts, split_function, divide_set, entropy, variance,
 
 
 class TorchDecisionTreeClassifier(torch.nn.Module):
+    """
+    Torch decision tree object used to solve classification problem. This object implements the fitting and prediction
+    function which can be used with torch tensors. The binary tree is based on :class:`DecisionNode` which are built
+    during the :function:`fit` and called recursively during the :function:`predict`.
 
+    Args:
+        max_depth (:class:`int`): The maximum depth which corresponds to the maximum number of decision node.
+
+    """
     def __init__(self, max_depth=-1):
-        self.root_node = None
+        self._root_node = None
         self.max_depth = max_depth
 
     def fit(self, vectors, labels, criterion=None):
@@ -19,9 +27,9 @@ class TorchDecisionTreeClassifier(torch.nn.Module):
         if not criterion:
             criterion = entropy
 
-        self.root_node = self.build_tree(vectors, labels, criterion, self.max_depth)
+        self._root_node = self._build_tree(vectors, labels, criterion, self.max_depth)
 
-    def build_tree(self, vectors, labels, func, depth):
+    def _build_tree(self, vectors, labels, func, depth):
         if len(vectors) == 0:
             return DecisionNode()
         if depth == 0:
@@ -48,8 +56,8 @@ class TorchDecisionTreeClassifier(torch.nn.Module):
                     best_sets = ((vectors_set_1,label_set_1), (vectors_set_2,label_set_2))
 
         if best_gain > 0:
-            true_branch = self.build_tree(best_sets[0][0], best_sets[0][1], func, depth - 1)
-            false_branch = self.build_tree(best_sets[1][0], best_sets[1][1], func, depth - 1)
+            true_branch = self._build_tree(best_sets[0][0], best_sets[0][1], func, depth - 1)
+            false_branch = self._build_tree(best_sets[1][0], best_sets[1][1], func, depth - 1)
             return DecisionNode(col=best_criteria[0],
                                 value=best_criteria[1],
                                 tb=true_branch, fb=false_branch)
@@ -58,9 +66,9 @@ class TorchDecisionTreeClassifier(torch.nn.Module):
 
     def predict(self, vector):
 
-        return self.classify(vector, self.root_node)
+        return self._classify(vector, self._root_node)
 
-    def classify(self, vector, node):
+    def _classify(self, vector, node):
 
         if node.results is not None:
             return list(node.results.keys())[0]
@@ -70,13 +78,13 @@ class TorchDecisionTreeClassifier(torch.nn.Module):
             else:
                 branch = node.fb
 
-            return self.classify(vector, branch)
+            return self._classify(vector, branch)
 
 
 class TorchDecisionTreeRegressor(torch.nn.Module):
 
     def __init__(self, max_depth=-1):
-        self.root_node = None
+        self._root_node = None
         self.max_depth = max_depth
 
     def fit(self, vectors, values, criterion=None):
@@ -87,9 +95,9 @@ class TorchDecisionTreeRegressor(torch.nn.Module):
         if not criterion:
             criterion = variance
 
-        self.root_node = self.build_tree(vectors, values, criterion, self.max_depth)
+        self._root_node = self._build_tree(vectors, values, criterion, self.max_depth)
 
-    def build_tree(self, vectors, values, func, depth):
+    def _build_tree(self, vectors, values, func, depth):
         if len(vectors) == 0:
             return DecisionNode()
         if depth == 0:
@@ -116,8 +124,8 @@ class TorchDecisionTreeRegressor(torch.nn.Module):
                     best_sets = ((vectors_set_1,values_set_1), (vectors_set_2,values_set_2))
 
         if best_gain > 0:
-            true_branch = self.build_tree(best_sets[0][0], best_sets[0][1], func, depth - 1)
-            false_branch = self.build_tree(best_sets[1][0], best_sets[1][1], func, depth - 1)
+            true_branch = self._build_tree(best_sets[0][0], best_sets[0][1], func, depth - 1)
+            false_branch = self._build_tree(best_sets[1][0], best_sets[1][1], func, depth - 1)
             return DecisionNode(col=best_criteria[0],
                                 value=best_criteria[1],
                                 tb=true_branch, fb=false_branch)
@@ -126,9 +134,9 @@ class TorchDecisionTreeRegressor(torch.nn.Module):
 
     def predict(self, vector):
 
-        return self.regress(vector, self.root_node)
+        return self._regress(vector, self._root_node)
 
-    def regress(self, vector, node):
+    def _regress(self, vector, node):
 
         if node.results is not None:
             return node.results
@@ -138,4 +146,4 @@ class TorchDecisionTreeRegressor(torch.nn.Module):
             else:
                 branch = node.fb
 
-            return self.regress(vector, branch)
+            return self._regress(vector, branch)
