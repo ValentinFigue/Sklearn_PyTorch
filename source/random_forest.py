@@ -9,7 +9,7 @@ class TorchRandomForestClassifier(torch.nn.Module):
     """
     Torch random forest object used to solve classification problem. This object implements the fitting and prediction
     function which can be used with torch tensors. The random forest is based on :class:`TorchDecisionTreeClassifier`
-    which are built during the :function:`fit` and called recursively during the :function:`predict`.
+    which are built during the :func:`fit` and called recursively during the :func:`predict`.
 
     Args:
         nb_trees (:class:`int`): Number of :class:`TorchDecisionTreeClassifier` used to fit the classification problem.
@@ -63,7 +63,7 @@ class TorchRandomForestClassifier(torch.nn.Module):
                 and must correspond to the following shape (num_dimensions).
 
         Returns:
-            label: :class:`torch.LongTensor` which corresponds to the label predicted by the random forest.
+            :class:`torch.LongTensor`: Tensor which corresponds to the label predicted by the random forest.
 
         """
         predictions = []
@@ -78,7 +78,7 @@ class TorchRandomForestRegressor(torch.nn.Module):
     """
     Torch random forest object used to solve regression problem. This object implements the fitting and prediction
     function which can be used with torch tensors. The random forest is based on :class:`TorchDecisionTreeRegressor`
-    which are built during the :function:`fit` and called recursively during the :function:`predict`.
+    which are built during the :func:`fit` and called recursively during the :func:`predict`.
 
     Args:
         nb_trees (:class:`int`): Number of :class:`TorchDecisionTreeRegressor` used to fit the classification problem.
@@ -133,7 +133,7 @@ class TorchRandomForestRegressor(torch.nn.Module):
                 and must correspond to the following shape (num_dimensions).
 
         Returns:
-            value: :class:`torch.FloatTensor` which corresponds to the value regressed by the random forest.
+            :class:`torch.FloatTensor`: Tensor which corresponds to the value regressed by the random forest.
 
         """
         predictions_sum = 0

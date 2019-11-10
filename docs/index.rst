@@ -4,17 +4,17 @@
    contain the root `toctree` directive.
 
 Welcome to Sklearn-Pytorch's documentation!
-==================================
+===========================================
 
 Contents:
 
 .. toctree::
    :maxdepth: 2
 
-DecisionNode :
+   random_forest.rst
+   binary_tree.rst
+   decision_node.rst
 
-.. autoclass:: source.decision_node.DecisionNode
-   :members:
 
 
 Indices and tables

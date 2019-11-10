@@ -9,7 +9,7 @@ class TorchDecisionTreeClassifier(torch.nn.Module):
     """
     Torch decision tree object used to solve classification problem. This object implements the fitting and prediction
     function which can be used with torch tensors. The binary tree is based on :class:`DecisionNode` which are built
-    during the :function:`fit` and called recursively during the :function:`predict`.
+    during the :func:`fit` and called recursively during the :func:`predict`.
 
     Args:
         max_depth (:class:`int`): The maximum depth which corresponds to the maximum successive number of
@@ -90,7 +90,7 @@ class TorchDecisionTreeClassifier(torch.nn.Module):
                 and must correspond to the following shape (num_dimensions).
 
         Returns:
-            label: :class:`torch.LongTensor` which corresponds to the label predicted by the binary tree.
+            :class:`torch.LongTensor`: Tensor which corresponds to the label predicted by the binary tree.
 
         """
         return self._classify(vector, self._root_node)
@@ -114,7 +114,7 @@ class TorchDecisionTreeRegressor(torch.nn.Module):
     """
     Torch decision tree object used to solve regression problem. This object implements the fitting and prediction
     function which can be used with torch tensors. The binary tree is based on :class:`DecisionNode` which are built
-    during the :function:`fit` and called recursively during the :function:`predict`.
+    during the :func:`fit` and called recursively during the :func:`predict`.
 
     Args:
         max_depth (:class:`int`): The maximum depth which corresponds to the maximum successive number of
@@ -196,7 +196,7 @@ class TorchDecisionTreeRegressor(torch.nn.Module):
                 and must correspond to the following shape (num_dimensions).
 
         Returns:
-            value: :class:`torch.FloatTensor` which corresponds to the value regressed by the binary tree.
+            :class:`torch.FloatTensor`: Tensor which corresponds to the value regressed by the binary tree.
 
         """
         return self._regress(vector, self._root_node)
